@@ -8,7 +8,7 @@
 // шести седми осми девети десети
 // ```
 //
-// Now I want to parse it with node.js, read both paragraphs, replace all space characters with empty lines and make the first paragraph a first column in a csv file called output.csv, and the second one as a second column. Use  as a separator. Also, for the second paragraph which is in serpski language I want to use latin notation.
+// We parse it with node.js, read both paragraphs, replace all space characters with empty lines and make the first paragraph a first column in a csv file called output.csv, and the second one as a second column. Use  as a separator. Also, for the second paragraph which is in serpski language I want to use latin notation.
 //
 // I also want to preserve the content of output.csv in order to save the previously added content.
 
@@ -92,11 +92,6 @@ function createCsvRecordArray(input) {
       .map((item) => item.trim())
       .filter((item) => item)
   );
-}
-
-/** @param {string} cyrillicWord */
-function putEmphasisForSerbianWord(cyrillicWord) {
-
 }
 
 const fs = require("fs");
