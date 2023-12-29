@@ -79,6 +79,43 @@ function serbianCyrillicToLatin(input) {
   return input.replace(/./g, (char) => map[char] || char);
 }
 
+/** @param {string} input */
+function serbianCyrillicToTranscript(input) {
+  const map = {
+    ве: "вэ",
+    не: "нэ",
+    де: "дэ",
+    ме: "мэ",
+    ре: "рэ",
+    фе: "фэ",
+    це: "цэ",
+    те: "тэ",
+    се: "сэ",
+    пе: "пэ",
+    ђ: "дж",
+    ње: "не",
+    ље: "ле",
+    њ: "н",
+    љ: "л",
+    џ: "ж",
+    ћ: "ч",
+    jу: "ю",
+    jа: "я",
+    jе: "е",
+    jи: "йи",
+    "\\s\\(m\\)": "",
+    "\\s\\(f\\)": "",
+    "\\s\\(n\\)": "",
+  };
+
+  // go through the map and replace all the keys with values
+  let result = input;
+  for (const key in map) {
+    result = result.replace(new RegExp(key, "g"), map[key]);
+  }
+  return result;
+}
+
 const INPUT_SEPARATOR = "\n";
 
 function createCsvRecordArray(input) {
@@ -97,7 +134,7 @@ function createCsvRecordArray(input) {
 const fs = require("fs");
 const { createObjectCsvWriter } = require("csv-writer");
 
-const INPUT_FILE_NAME = "numbers-other.txt";
+const INPUT_FILE_NAME = "files/hours-time-of-day.txt";
 const OUTPUT_FILE_NAME = `${INPUT_FILE_NAME.split(".")[0]}.csv`;
 
 // Read the contents of the input file
@@ -109,7 +146,7 @@ fs.readFile(INPUT_FILE_NAME, "utf8", (err, data) => {
 
   // Replace space characters with empty lines
   const formattedColumn1 = createCsvRecordArray(serbianCyrillicToLatin(paragraph2));
-  const formattedColumn2 = createCsvRecordArray(paragraph2);
+  const formattedColumn2 = createCsvRecordArray(serbianCyrillicToTranscript(paragraph2));
   const formattedColumn3 = createCsvRecordArray(paragraph1);
 
   console.log("formattedColumn1", formattedColumn1);

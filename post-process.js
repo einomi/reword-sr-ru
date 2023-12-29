@@ -48,7 +48,7 @@ function convertToAccented(word) {
   return convertedWord;
 }
 
-const inputFile = 'numbers.csv';
+const inputFile = 'files/hours-time-of-day.csv';
 const outputFile = `${inputFile.split('.')[0]}.processed.csv`
 
 fs.readFile(inputFile, 'utf8', (err, data) => {
