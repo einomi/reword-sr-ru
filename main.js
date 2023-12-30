@@ -12,9 +12,14 @@
 //
 // I also want to preserve the content of output.csv in order to save the previously added content.
 
+require("dotenv").config();
+
 /** @param {string} input */
 function serbianCyrillicToLatin(input) {
   const map = {
+    "\\s\\(м\\)": " (m)",
+    "\\s\\(ж\\)": " (f)",
+    "\\s\\(с\\)": " (n)",
     а: "a",
     б: "b",
     в: "v",
@@ -76,7 +81,12 @@ function serbianCyrillicToLatin(input) {
     Џ: "Dž",
     Ш: "Š",
   };
-  return input.replace(/./g, (char) => map[char] || char);
+  // go through the map and replace all the keys with values
+  let result = input;
+  for (const key in map) {
+    result = result.replace(new RegExp(key, "g"), map[key]);
+  }
+  return result;
 }
 
 /** @param {string} input */
@@ -92,20 +102,26 @@ function serbianCyrillicToTranscript(input) {
     те: "тэ",
     се: "сэ",
     пе: "пэ",
+    ше: "шэ",
+    ле: "лэ",
     ђ: "дж",
     ње: "не",
     ље: "ле",
+    ља: "ля",
     њ: "н",
     љ: "л",
     џ: "ж",
     ћ: "ч",
+    аj: "ай",
+    иj: "ий",
+    оj: "ой",
     jу: "ю",
     jа: "я",
     jе: "е",
     jи: "йи",
-    "\\s\\(m\\)": "",
-    "\\s\\(f\\)": "",
-    "\\s\\(n\\)": "",
+    "\\s\\(м\\)": "",
+    "\\s\\(ж\\)": "",
+    "\\s\\(с\\)": "",
   };
 
   // go through the map and replace all the keys with values
@@ -134,7 +150,7 @@ function createCsvRecordArray(input) {
 const fs = require("fs");
 const { createObjectCsvWriter } = require("csv-writer");
 
-const INPUT_FILE_NAME = "files/hours-time-of-day.txt";
+const INPUT_FILE_NAME = `${process.env.FILE_NAME}.txt`;
 const OUTPUT_FILE_NAME = `${INPUT_FILE_NAME.split(".")[0]}.csv`;
 
 // Read the contents of the input file

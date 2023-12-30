@@ -1,3 +1,4 @@
+require("dotenv").config();
 const fs = require('fs');
 
 // А́а́, Е́е́, И́и́, О́о́, У́у́, Ы́ы́, Э́э́, Ю́ю́, Я́я́
@@ -48,7 +49,7 @@ function convertToAccented(word) {
   return convertedWord;
 }
 
-const inputFile = 'files/hours-time-of-day.csv';
+const inputFile = `${process.env.FILE_NAME}.csv`;
 const outputFile = `${inputFile.split('.')[0]}.processed.csv`
 
 fs.readFile(inputFile, 'utf8', (err, data) => {
